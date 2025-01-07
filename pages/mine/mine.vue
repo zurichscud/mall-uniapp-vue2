@@ -7,11 +7,11 @@
 				<text>会员码</text>
 			</button>
 		</view>
-		
+
 		<view style="padding: 0 30rpx;">
 			<!-- user box begin -->
 			<view class="d-flex flex-column bg-white user-box">
-				
+
 				<view class="d-flex align-items-center">
 					<view class="avatar">
 						<image :src="isLogin ? member.icon : '/static/images/mine/default.png'"></image>
@@ -21,7 +21,8 @@
 						</view>
 					</view>
 					<view class="d-flex flex-column flex-fill" style="margin-top: 20rpx;">
-						<view v-if="isLogin" class="font-size-lg font-weight-bold d-flex justify-content-start align-items-center"
+						<view v-if="isLogin"
+							class="font-size-lg font-weight-bold d-flex justify-content-start align-items-center"
 							@tap="userinfo">
 							<view>{{ member.nickname }}</view>
 							<view class="iconfont iconarrow-right line-height-100"></view>
@@ -31,10 +32,12 @@
 							当前积分{{ isLogin ? member.blance : 0 }}/{{ isLogin ? member.blance + member.blance : 0 }}
 						</view>
 						<view class="w-100">
-							 <progress percent="0" activeColor="#ADB838" height="8rpx" :percent="growthValue" border-radius="8rpx"/>
+							<progress percent="0" activeColor="#ADB838" height="8rpx" :percent="growthValue"
+								border-radius="8rpx" />
 						</view>
 					</view>
-					<view class="level-benefit d-flex align-items-center justify-content-end text-color-white bg-warning font-size-sm">
+					<view
+						class="level-benefit d-flex align-items-center justify-content-end text-color-white bg-warning font-size-sm">
 						<view>会员权益</view>
 						<view class="iconfont iconarrow-right line-height-100"></view>
 					</view>
@@ -43,25 +46,25 @@
 				<view class="w-100 d-flex align-items-center just-content-center">
 					<view class="user-grid" @tap="coupons">
 						<view class="value font-size-extra-lg font-weight-bold text-color-base">
-							{{  isLogin ? couponList.length : '***' }}
+							{{ isLogin ? couponList.length : '***' }}
 						</view>
 						<view class="font-size-sm text-color-assist">奈雪券</view>
 					</view>
 					<view class="user-grid" @tap="integrals">
 						<view class="value font-size-extra-lg font-weight-bold text-color-base">
-							{{  isLogin ? couponList.length : '***' }}
+							{{ isLogin ? couponList.length : '***' }}
 						</view>
 						<view class="font-size-sm text-color-assist">积分商城</view>
 					</view>
 					<view class="user-grid" @tap="balance">
 						<view class="value font-size-extra-lg font-weight-bold text-color-base">
-							{{  isLogin ? member.blance : '***' }}
+							{{ isLogin ? member.blance : '***' }}
 						</view>
 						<view class="font-size-sm text-color-assist">余额</view>
 					</view>
 					<view class="user-grid">
 						<view class="value font-size-extra-lg font-weight-bold text-color-base">
-							{{  isLogin ? member.integration : '***' }}
+							{{ isLogin ? member.integration : '***' }}
 						</view>
 						<view class="font-size-sm text-color-assist">礼品卡</view>
 					</view>
@@ -111,18 +114,18 @@
 					<image src="/static/images/mine/jfqd.png"></image>
 					<view>积分签到</view>
 				</view>
-				<view class="grid">
+				<navigator class="grid" url="/pages/review/review">
 					<image src="/static/images/mine/stxy.png"></image>
-					<view>送她心愿</view>
-				</view>
-<!-- 				<view class="grid">
+					<view>反馈页面</view>
+				</navigator>
+				<!-- 				<view class="grid">
 					<image src="/static/images/mine/nxlw.png"></image>
 					<view>奈雪礼物</view>
 				</view> -->
-				<view class="grid">
+				<navigator class="grid" url="/pages/remark/remark">
 					<image src="/static/images/mine/nxsc.png"></image>
-					<view>奈雪商城</view>
-				</view>
+					<view>备注</view>
+				</navigator>
 				<view class="grid">
 					<image src="/static/images/mine/lxkf.png"></image>
 					<view>联系客服</view>
@@ -139,15 +142,24 @@
 					<image src="/static/images/mine/shdz.png"></image>
 					<view>收货地址</view>
 				</view>
-				<view class="grid">
+				<navigator class="grid" url="/pages/balance/balance">
 					<image src="/static/images/mine/gdfw.png"></image>
-					<view>更多服务</view>
-				</view>
+					<view>balance</view>
+				</navigator>
+        <navigator class="grid" url="/pages/coupons/coupons">
+          <image src="/static/images/mine/gdfw.png"></image>
+          <view>coupons</view>
+        </navigator>
+        <navigator class="grid" url="/pages/integrals/integrals">
+          <image src="/static/images/mine/gdfw.png"></image>
+          <view>integrals</view>
+        </navigator>
 			</view>
 		</view>
 		<!-- service box end -->
 		<!-- tips begin -->
-		<view class="d-flex just-content-center align-items-center text-color-assist" style="padding: 30rpx 0; font-size: 22rpx;">
+		<view class="d-flex just-content-center align-items-center text-color-assist"
+			style="padding: 30rpx 0; font-size: 22rpx;">
 			会员卡适用于奈雪的茶和奈雪酒屋指定范围
 		</view>
 		<!-- tisps end -->
@@ -156,150 +168,152 @@
 
 <script>
 import Api from '@/common/api';
-	import {mapState, mapGetters} from 'vuex'
-	export default {
-		data() {
-			return {
+import { mapState, mapGetters } from 'vuex'
+export default {
+	data() {
+		return {
 			couponList: [],
 			member: {
-            				blance: 0,
-            				integration: 0
-            			},
-			isLogin:false
-			}
-		},
-		computed: {
+				blance: 0,
+				integration: 0
+			},
+			isLogin: true
+		}
+	},
+	computed: {
 
 
-			growthValue() {
-				if(true) return 0
-				const {currentValue, needValue} = this.member
-				return currentValue / (currentValue + needValue) * 100
+		growthValue() {
+			if (true) return 0
+			const { currentValue, needValue } = this.member
+			return currentValue / (currentValue + needValue) * 100
+		}
+	},
+	async onLoad() {
+		let token = uni.getStorageSync('token') || '';
+		if (token) {
+			this.isLogin = true;
+			let params = {};
+			let data1 = await Api.apiCall('get', Api.index.userInfo, params);
+			if (!data1) {
+				this.member = {};
 			}
-		},
-	async	onLoad() {
-			let token = uni.getStorageSync('token') || '';
-             if(token) {
-        					this.isLogin=true;
-        				let params = {  };
-                        				let data1 = await Api.apiCall('get', Api.index.userInfo, params);
-                        				if(!data1){
-                                        			this.member={};
-                                        	}
-                        				this.member = data1.member;
-                        				if(!data1.member){
-                        					this.logout();
-                        				}else{
-                        				uni.setStorageSync('userInfos', data1.member);
-                                        				console.log(this.member)
-                                        				let couponList = data1.histories;
-                                                                        				this.couponList = couponList;
-                        				}
-        				}
-		},
-		methods: {
-			login() {
-				uni.navigateTo({
-					url: '/pages/login/login'
-				})
-			},
-			packages() {
-				let token = uni.getStorageSync('token') || '';
-if(!token) {
-					this.login()
-					return
-				}
-				uni.navigateTo({
-					url: '/pages/packages/index'
-				})
-			},
-			balance() {
-				let token = uni.getStorageSync('token') || '';if(!token) {
-					this.login()
-					return
-				}
-				uni.navigateTo({
-					url: '/pages/balance/balance'
-				})
-			},
-			addresses() {
-				let token = uni.getStorageSync('token') || '';if(!token) {
-					this.login()
-					return
-				}
-				uni.navigateTo({
-					url: '/pages/address/address'
-				})
-			},
-			integrals() {
-				let token = uni.getStorageSync('token') || ''; if(!token) {
-					this.login()
-					return
-				}
-				uni.navigateTo({
-					url: '/pages/integrals/integrals'
-				})
-			},
-			attendance() {
-				let token = uni.getStorageSync('token') || '';
-                if(!token) {
-					this.login()
-					return
-				}
-				uni.navigateTo({
-					url: '/pages/attendance/attendance'
-				})
-			},
-			orders() {
-				let token = uni.getStorageSync('token') || '';
-				console.log(token)
-                if(!token) {
-					this.login()
-					return
-				}
-				uni.navigateTo({
-					url: '/pages/orders/orders'
-				})
-			},
-			memberCode() {
-				let token = uni.getStorageSync('token') || '';
-if(!token) {
-					this.login()
-					return
-				}
-				uni.navigateTo({
-					url: '/pages/mine/member-code'
-				})
-			},
-			coupons() {
-				let token = uni.getStorageSync('token') || '';
-if(!token) {
-					this.login()
-					return
-				}
-				uni.navigateTo({
-					url: '/pages/coupons/coupons'
-				})
-			},
-			userinfo() {
-				let token = uni.getStorageSync('token') || '';
-if(!token) {
-					this.login()
-					return
-				}
-				uni.navigateTo({
-					url: '/pages/mine/userinfo'
-				})
+			this.member = data1.member;
+			if (!data1.member) {
+				this.logout();
+			} else {
+				uni.setStorageSync('userInfos', data1.member);
+				console.log(this.member)
+				let couponList = data1.histories;
+				this.couponList = couponList;
 			}
 		}
+	},
+	methods: {
+		login() {
+			uni.navigateTo({
+				url: '/pages/login/login'
+			})
+		},
+		packages() {
+			let token = uni.getStorageSync('token') || '';
+			if (!token) {
+				this.login()
+				return
+			}
+			uni.navigateTo({
+				url: '/pages/packages/index'
+			})
+		},
+		balance() {
+			let token = uni.getStorageSync('token') || ''; if (!token) {
+				this.login()
+				return
+			}
+			uni.navigateTo({
+				url: '/pages/balance/balance'
+			})
+		},
+		addresses() {
+			let token = uni.getStorageSync('token') || ''; 
+			if (!token) {
+				this.login()
+				return
+			}
+			uni.navigateTo({
+				url: '/pages/address/address'
+			})
+		},
+		integrals() {
+			let token = uni.getStorageSync('token') || ''; 
+			if (!token) {
+				this.login()
+				return
+			}
+			uni.navigateTo({
+				url: '/pages/integrals/integrals'
+			})
+		},
+		attendance() {
+			let token = uni.getStorageSync('token') || '';
+			if (!token) {
+				this.login()
+				return
+			}
+			uni.navigateTo({
+				url: '/pages/attendance/attendance'
+			})
+		},
+		orders() {
+			let token = uni.getStorageSync('token') || '';
+			console.log(token)
+			if (!token) {
+				this.login()
+				return
+			}
+			uni.navigateTo({
+				url: '/pages/orders/orders'
+			})
+		},
+		memberCode() {
+			let token = uni.getStorageSync('token') || '';
+			if (!token) {
+				this.login()
+				return
+			}
+			uni.navigateTo({
+				url: '/pages/mine/member-code'
+			})
+		},
+		coupons() {
+			let token = uni.getStorageSync('token') || '';
+			if (!token) {
+				this.login()
+				return
+			}
+			uni.navigateTo({
+				url: '/pages/coupons/coupons'
+			})
+		},
+		userinfo() {
+			let token = uni.getStorageSync('token') || '';
+			if (!token) {
+				this.login()
+				return
+			}
+			uni.navigateTo({
+				url: '/pages/mine/userinfo'
+			})
+		}
 	}
+}
 </script>
 
 <style lang="scss" scoped>
 page {
 	height: auto;
 	min-height: 100%;
-}	
+}
 
 .bg {
 	width: 100%;
@@ -316,11 +330,12 @@ page {
 	justify-content: center;
 	border-radius: 50rem;
 	font-size: $font-size-sm;
-	box-shadow: 0 0 20rpx rgba(66,66,66,0.1);
+	box-shadow: 0 0 20rpx rgba(66, 66, 66, 0.1);
+
 	&::after {
 		border: 0;
 	}
-	
+
 	image {
 		width: 30rpx;
 		height: 30rpx;
@@ -330,7 +345,7 @@ page {
 
 .user-box {
 	position: relative;
-	border-radius: 8rpx; 
+	border-radius: 8rpx;
 	margin-bottom: 30rpx;
 	margin-top: -115rpx;
 	box-shadow: $box-shadow;
@@ -349,13 +364,13 @@ page {
 	justify-content: center;
 	background-color: #FFFFFF;
 	box-shadow: 0 0 20rpx rgba($color: #000000, $alpha: 0.2);
-	
+
 	image {
 		width: 140rpx;
 		height: 140rpx;
 		border-radius: 100%;
 	}
-	
+
 	.badge {
 		position: absolute;
 		right: -10rpx;
@@ -369,7 +384,7 @@ page {
 		font-size: 24rpx;
 		padding: 8rpx 16rpx;
 		box-shadow: 0 0 20rpx rgba($color: #000000, $alpha: 0.2);
-		
+
 		image {
 			width: 30rpx;
 			height: 30rpx;
@@ -390,14 +405,14 @@ page {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	
+
 	.value {
 		margin-bottom: 20rpx;
 	}
 }
 
 .level-benefit-box {
-	border-radius: 8rpx; 
+	border-radius: 8rpx;
 	margin-bottom: 30rpx;
 	box-shadow: 0 10rpx 8rpx rgba($color: #878889, $alpha: 0.1);
 	width: 100%;
@@ -405,13 +420,13 @@ page {
 	padding: 30rpx;
 	flex-direction: column;
 	background-color: #FFFFFF;
-	
+
 	.row {
 		display: flex;
 		padding: 30rpx 0 20rpx;
 		justify-content: space-around;
 		align-items: center;
-		
+
 		.grid {
 			width: 20%;
 			display: flex;
@@ -440,14 +455,14 @@ page {
 	background-color: #FFFFFF;
 	padding: 32rpx 30rpx 10rpx;
 	box-shadow: $box-shadow;
-	
+
 	.row {
 		display: flex;
 		flex-wrap: wrap;
 		color: $text-color-base;
 		font-size: $font-size-base;
 		padding-bottom: -40rpx;
-		
+
 		.grid {
 			display: flex;
 			flex-direction: column;
@@ -455,7 +470,7 @@ page {
 			align-items: center;
 			margin-bottom: 40rpx;
 			width: 25%;
-			
+
 			image {
 				width: 80rpx;
 				height: 80rpx;

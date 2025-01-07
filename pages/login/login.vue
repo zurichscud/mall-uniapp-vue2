@@ -10,17 +10,25 @@
 		</view>
 		<view class="bottom">
 			<!-- #ifdef H5 -->
-				<button type="primary" size="default" class="login-btn" @tap="login">
-					登录
-				</button>
+			<button type="primary" size="default" class="login-btn" @tap="login">
+				登录
+			</button>
 			<!-- #endif -->
 			<!-- #ifdef MP-WEIXIN -->
-				<button type="primary" size="default" class="login-btn" open-type="getUserInfo" lang="zh_CN" @getuserinfo="getUserInfo">
-					<image src="/static/images/mine/wechat.png"></image>
-					微信一键登录
-				</button>
+			<button type="primary" size="default" class="login-btn" open-type="getUserInfo" lang="zh_CN"
+				@getuserinfo="getUserInfo">
+				<image src="/static/images/mine/wechat.png"></image>
+				微信一键登录
+			</button>
 			<!-- #endif -->
-			<view class="d-flex flex-column justify-content-evenly align-items-center text-center" style="height: 30vh;">
+      <view style="height: 15rpx">
+
+      </view>
+      <button type="primary" size="default" class="login-btn" @tap="login">
+        登录
+      </button>
+			<view class="d-flex flex-column justify-content-evenly align-items-center text-center"
+				style="height: 30vh;">
 				<view class="w-100 font-size-base text-color-assist">新用户登录即加入会员，享会员权益</view>
 				<view class="w-100 row d-flex just-content-around align-items-center font-size-sm text-color-assist">
 					<view class="grid">
@@ -51,112 +59,128 @@
 </template>
 
 <script>
-	import Member from '@/api/member'
-	import Api from '@/common/api';
-	import {mapMutations} from 'vuex'
-	
-	export default {
-		data() {
-			return {
-				
-			}
-		},
-		methods: {
-			...mapMutations(['SET_MEMBER']),
-			async getUserInfo(e) {
-				const {errMsg, userInfo} = e.detail
-				if(errMsg !== "getUserInfo:ok") {
-					uni.showModal({
-						title: '提示',
-						content: '您取消了授权登录，请重新授权',
-						showCancel: false
-					})
-					
-					//没有授权登录就用默认的用户信息
-					this.SET_MEMBER(Member)
-					uni.navigateBack()
-					
-					return
-				} else {
-					const {avatarUrl: avatar, city, country, gender, nickName: nickname, province} = userInfo
-					const member = Object.assign(Member, {avatar, city, country, gender, nickname, province})
-					this.SET_MEMBER(member)
-					
-					uni.navigateBack()
-				}
-			},
-			async login() {
-				let params = { phone: '13146587722', password: '123456' };
-                			let data = await Api.apiCall('post', Api.index.login, params);
-                			//this.logining = false;
-                			if (data) {
+import Member from '@/api/member'
+import Api from '@/common/api';
+import { mapMutations } from 'vuex'
 
-                				uni.setStorageSync('userInfos', data.userInfo);
-                				uni.setStorageSync('token', data.tokenHead + data.token);
-                				console.log(uni.getStorageSync('token'));
-                				uni.switchTab({
-                					url: '/pages/index/index'
-                				});
-                			}
+export default {
+	data() {
+		return {
+
+		}
+	},
+	methods: {
+		...mapMutations(['SET_MEMBER']),
+		async getUserInfo(e) {
+			const { errMsg, userInfo } = e.detail
+			if (errMsg !== "getUserInfo:ok") {
+				uni.showModal({
+					title: '提示',
+					content: '您取消了授权登录，请重新授权',
+					showCancel: false
+				})
+
+				//没有授权登录就用默认的用户信息
+				this.SET_MEMBER(Member)
+				uni.navigateBack()
+
+				return
+			} else {
+				const { avatarUrl: avatar, city, country, gender, nickName: nickname, province } = userInfo
+				const member = Object.assign(Member, { avatar, city, country, gender, nickname, province })
+				this.SET_MEMBER(member)
+
 				uni.navigateBack()
 			}
+		},
+		async login() {
+			let params = { phone: '13146587722', password: '123456' };
+			// let data = await Api.apiCall('post', Api.index.login, params);
+			//this.logining = false;
+      let data = {
+				userInfo: {
+					nickname: '小明',
+					avatar: '/static/images/mine/default.png',
+					gender: 1,
+					city: '北京',
+					province: '北京',
+					country: '中国',
+					openid: '1234567890',
+					unionid: '1234567890',
+					memberLevel: 1,
+					memberLevelName: '普通会员',
+					memberOrigin: 'wechat',
+				}
+      }
+			if (data) {
+
+				uni.setStorageSync('userInfos', data.userInfo);
+				uni.setStorageSync('token', 666);
+				console.log(uni.getStorageSync('token'));
+				uni.switchTab({
+					url: '/pages/index/index'
+				});
+			}
+			uni.navigateBack()
 		}
 	}
+}
 </script>
 
 <style lang="scss" scoped>
-	.intro {
+.intro {
+	width: 100%;
+	height: 60vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-evenly;
+	font-size: $font-size-base;
+	color: $text-color-assist;
+
+	image {
+		width: 165rpx;
+		height: 165rpx;
+	}
+
+	.tips {
+		line-height: 72rpx;
+		text-align: center;
+	}
+}
+
+.bottom {
+	height: 40vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 0 40rpx;
+
+	.login-btn {
 		width: 100%;
-		height: 60vh;
+		border-radius: 50rem !important;
 		display: flex;
-		flex-direction: column;
 		align-items: center;
-		justify-content: space-evenly;
-		font-size: $font-size-base;
-		color: $text-color-assist;
-		
+		justify-content: center;
+		padding: 10rpx 0;
+
 		image {
-			width: 165rpx;
-			height: 165rpx;
-		}
-		
-		.tips {
-			line-height: 72rpx;
-			text-align: center;
+			width: 36rpx;
+			height: 30rpx;
+			margin-right: 10rpx;
 		}
 	}
-	
-	.bottom {
-		height: 40vh;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		padding: 0 40rpx;
-		
-		.login-btn {
-			width: 100%;
-			border-radius: 50rem !important;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			padding: 10rpx 0;
-			
+
+	.row {
+		.grid {
+			width: 20%;
+
 			image {
-				width: 36rpx;
-				height: 30rpx;
-				margin-right: 10rpx;
-			}
-		}
-		
-		.row {
-			.grid {
-				width: 20%;
-				image {
-					width: 60rpx;
-					height: 60rpx;
-					margin-bottom: 10rpx;
-				}
+				width: 60rpx;
+				height: 60rpx;
+				margin-bottom: 10rpx;
 			}
 		}
 	}
+}
 </style>

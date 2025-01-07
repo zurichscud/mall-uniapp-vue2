@@ -1,6 +1,6 @@
 <template>
 	<view class="container bg-white w-100 h-100">
-		
+		<!--会员充值-->
 		<view style="padding-bottom: 220rpx;">
 			
 			<view class="balance-info d-flex justify-content-between">
